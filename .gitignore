@@ -1,0 +1,10 @@
+*.ez
+/.fetch
+/_build/
+/cover/
+/deps/
+/doc/
+/tmp/
+Brewfile.lock.json
+erl_crash.dump
+tablerone-*.tar
