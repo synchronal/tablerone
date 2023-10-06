@@ -1,11 +1,9 @@
 # Tablerone
 
-**TODO: Add description**
+Renders specific tabler icons by downloading to the priv directory of the parent application.
+and loading them from files.
 
 ## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `tablerone` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -15,7 +13,43 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/tablerone>.
+## Usage
 
+Configure tablerone with the `:otp_app` of the parent application, so that icons can be
+loaded from the proper priv directory at run time.
+
+```elixir
+import Config
+
+config :tablerone, :otp_app, <:my_app>
+```
+
+Run the mix task to download one or more icons.
+
+
+```shell
+mix tablerone.download <icon-name> <icon-2-name ...
+```
+
+An example heex component for rendering the icon.
+
+
+```elixir
+attr :name, :atom, required: true
+attr :class, :list, default: []
+
+defp icon(assigns) do
+  name = assigns[:name]
+  icon_contents = Tablerone.icon(name)
+
+  assigns =
+    assign_new(assigns, :icon_contents, fn ->
+      class = [class: assigns[:class]] |> Phoenix.HTML.attributes_escape() |> Phoenix.HTML.safe_to_string()
+      String.replace(icon_contents, ~r{class="[^"]+"}, class)
+    end)
+
+  ~H"""
+  <%= Phoenix.HTML.raw(@icon_contents) %>
+  """
+end
+```
