@@ -38,7 +38,7 @@ defmodule Tablerone.MixProject do
 
   defp dialyzer,
     do: [
-      plt_add_apps: [:ex_unit, :mix],
+      plt_add_apps: [:ex_unit, :inets, :mix],
       plt_add_deps: :app_tree,
       plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
     ]

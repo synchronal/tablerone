@@ -4,6 +4,7 @@
 /cover/
 /deps/
 /doc/
+/priv/plts
 /tmp/
 Brewfile.lock.json
 erl_crash.dump
