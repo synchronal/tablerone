@@ -2,7 +2,12 @@ defmodule Mix.Tasks.Tablerone.Download do
   use Mix.Task
 
   @shortdoc "Downloads a tabler icon to the local priv directory"
-  @moduledoc "Downloads a tabler icon to the local priv dir"
+  @moduledoc """
+  Downloads a tabler icon to the local priv dir.
+
+      mix tablerone.download cactus
+      mix tablerone.download cactus cactus-off
+  """
 
   @impl Mix.Task
   def run(args) do
