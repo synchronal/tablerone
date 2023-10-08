@@ -15,6 +15,31 @@ defmodule TableroneTest do
                  <path d="M3 3l18 18" />
                </svg>
                """
+               |> String.trim()
+    end
+
+    test "raises when the icon has not been cached" do
+      assert_raise ArgumentError,
+                   """
+                   Icon :cactus has not been downloaded.
+
+                   To download this icon to the local application, run the following in a terminal:
+
+                       mix tablerone.download cactus
+                   """,
+                   fn -> Tablerone.icon(:cactus) end
+    end
+  end
+
+  describe "path" do
+    test "returns a dasherized svg file name in the local priv dir" do
+      assert Tablerone.path(:some_icon_name) ==
+               Path.join([:code.priv_dir(:tablerone), "tablerone", "some-icon-name.svg"])
+    end
+
+    test "can take a dasherized string" do
+      assert Tablerone.path("some-icon-name") ==
+               Path.join([:code.priv_dir(:tablerone), "tablerone", "some-icon-name.svg"])
     end
   end
 end
