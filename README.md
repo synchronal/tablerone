@@ -28,7 +28,7 @@ Run the mix task to download one or more icons.
 
 
 ```shell
-mix tablerone.download <icon-name> <icon-2-name ...
+mix tablerone.download <icon-name> <icon-name-2> ...
 ```
 
 An example heex component for rendering the icon.
