@@ -54,6 +54,10 @@ defmodule Mix.Tasks.Tablerone.Download do
 
   # copied from https://github.com/elixir-lang/elixir/blob/main/lib/mix/lib/mix/tasks/app.start.ex
   defp start(apps, type, mode) do
+    Mix.ensure_application!(:public_key)
+    Mix.ensure_application!(:ssl)
+    Mix.ensure_application!(:inets)
+
     case Application.ensure_all_started(apps, type: type, mode: mode) do
       {:ok, _} -> :ok
       {:error, {app, reason}} -> Mix.raise(could_not_start(app, reason))
@@ -66,7 +70,13 @@ defmodule Mix.Tasks.Tablerone.Download do
 
   defmodule Downloader do
     def get(name) do
-      case :httpc.request(icon_url(name)) do
+      headers = [
+        {~c"accept", ~c"*/*"},
+        {~c"host", ~c"tabler-icons.io"},
+        {~c"user-agent", String.to_charlist("erlang-httpc/OTP#{:erlang.system_info(:otp_release)} hex/tablerone")}
+      ]
+
+      case :httpc.request(:get, {icon_url(name), headers}, [], body_format: :binary) do
         {:ok, {{_, 200, _}, _resp_headers, body}} -> {:ok, to_string(body)}
         {:ok, {{_, 404, _}, _resp_headers, _body}} -> {:error, :not_found}
         {:ok, {{_, status_code, _}, _resp_headers, _body}} -> {:error, {:http_error, status_code}}
