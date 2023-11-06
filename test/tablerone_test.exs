@@ -21,13 +21,25 @@ defmodule TableroneTest do
     test "raises when the icon has not been cached" do
       assert_raise ArgumentError,
                    """
-                   Icon :cactus has not been downloaded.
+                   Icon `cactus` has not been downloaded.
 
                    To download this icon to the local application, run the following in a terminal:
 
                        mix tablerone.download cactus
                    """,
                    fn -> Tablerone.icon(:cactus) end
+    end
+
+    test "dasherizes atom icon when icon has not been cached" do
+      assert_raise ArgumentError,
+                   """
+                   Icon `user-circle` has not been downloaded.
+
+                   To download this icon to the local application, run the following in a terminal:
+
+                       mix tablerone.download user-circle
+                   """,
+                   fn -> Tablerone.icon(:user_circle) end
     end
   end
 

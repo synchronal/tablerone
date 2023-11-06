@@ -48,8 +48,6 @@ defmodule Tablerone do
   ```
   """
 
-  @otp_app Application.compile_env!(:tablerone, :otp_app)
-
   @doc """
   Renders the given icon as a Phoenix component. If the icon has not been downloaded
   to the priv directory of the parent application, `icon` will raise at run time,
@@ -61,19 +59,24 @@ defmodule Tablerone do
       iex> match?("<svg " <> _, icon)
       true
   """
-  def icon(name) when is_atom(name) do
-    svg_name = Tablerone.dasherize(name)
-    svg_path = Tablerone.path(name)
+  @spec icon(atom() | binary(), keyword()) :: binary()
+  def icon(name, opts \\ Application.get_all_env(:tablerone))
+
+  def icon(name, opts) when is_atom(name),
+    do: name |> dasherize() |> icon(opts)
+
+  def icon(name, opts) when is_binary(name) do
+    svg_path = Tablerone.path(name, opts)
 
     if File.exists?(svg_path) do
       File.read!(svg_path)
     else
       raise ArgumentError, """
-      Icon :#{name} has not been downloaded.
+      Icon `#{name}` has not been downloaded.
 
       To download this icon to the local application, run the following in a terminal:
 
-          mix tablerone.download #{svg_name}
+          mix tablerone.download #{name}
       """
     end
   end
@@ -84,10 +87,13 @@ defmodule Tablerone do
   The file is saved to a `tablerone` director in the priv dir of the parent application,
   specified by the `:tablerone, :otp_app` config.
   """
-  def path(icon_name) when is_atom(icon_name), do: icon_name |> dasherize() |> path()
+  @spec path(atom() | binary(), keyword()) :: Path.t()
+  def path(icon_name, opts \\ Application.get_all_env(:tablerone))
+  def path(icon_name, opts) when is_atom(icon_name), do: icon_name |> dasherize() |> path(opts)
 
-  def path(icon_name) when is_binary(icon_name) do
-    Path.join([:code.priv_dir(@otp_app), "tablerone", "#{icon_name}.svg"])
+  def path(icon_name, opts) when is_binary(icon_name) do
+    otp_app = Keyword.fetch!(opts, :otp_app)
+    Path.join([:code.priv_dir(otp_app), "tablerone", "#{icon_name}.svg"])
   end
 
   @doc false
