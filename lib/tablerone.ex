@@ -49,9 +49,8 @@ defmodule Tablerone do
   """
 
   @doc """
-  Renders the given icon as a Phoenix component. If the icon has not been downloaded
-  to the priv directory of the parent application, `icon` will raise at run time,
-  with instructions on how to run a mix task to download the icon.
+  Renders the given icon as a Phoenix component. If the icon has not been downloaded to the priv directory of the
+  parent application, `icon` will raise at run time, with instructions on how to run a mix task to download the icon.
 
   ## Examples
 
@@ -60,13 +59,9 @@ defmodule Tablerone do
       true
   """
   @spec icon(atom() | binary(), keyword()) :: binary()
-  def icon(name, opts \\ Application.get_all_env(:tablerone))
-
-  def icon(name, opts) when is_atom(name),
-    do: name |> dasherize() |> icon(opts)
-
-  def icon(name, opts) when is_binary(name) do
-    svg_path = Tablerone.path(name, opts)
+  def icon(name, opts \\ Application.get_all_env(:tablerone)) do
+    name = dasherize(name)
+    svg_path = path(name, opts)
 
     if File.exists?(svg_path) do
       File.read!(svg_path)
@@ -82,21 +77,17 @@ defmodule Tablerone do
   end
 
   @doc """
-  Given an icon as a string or atom, returns the expected path to the svg file.
+  Given an icon name as a string or atom, returns the expected path to the svg file.
 
-  The file is saved to a `tablerone` director in the priv dir of the parent application,
+  The file is saved to a `tablerone` directory in the priv dir of the parent application,
   specified by the `:tablerone, :otp_app` config.
   """
   @spec path(atom() | binary(), keyword()) :: Path.t()
-  def path(icon_name, opts \\ Application.get_all_env(:tablerone))
-  def path(icon_name, opts) when is_atom(icon_name), do: icon_name |> dasherize() |> path(opts)
-
-  def path(icon_name, opts) when is_binary(icon_name) do
+  def path(icon_name, opts \\ Application.get_all_env(:tablerone)) do
     otp_app = Keyword.fetch!(opts, :otp_app)
-    Path.join([:code.priv_dir(otp_app), "tablerone", "#{icon_name}.svg"])
+    Path.join([:code.priv_dir(otp_app), "tablerone", "#{dasherize(icon_name)}.svg"])
   end
 
   @doc false
-  def dasherize(icon_name) when is_atom(icon_name), do: dasherize(Atom.to_string(icon_name))
-  def dasherize(icon_name) when is_binary(icon_name), do: String.replace(icon_name, "_", "-")
+  def dasherize(icon_name), do: icon_name |> to_string() |> String.replace("_", "-")
 end

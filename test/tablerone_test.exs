@@ -45,7 +45,7 @@ defmodule TableroneTest do
 
   describe "path" do
     test "returns a dasherized svg file name in the local priv dir" do
-      assert Tablerone.path(:some_icon_name) ==
+      assert Tablerone.path("some_icon_name") ==
                Path.join([:code.priv_dir(:tablerone), "tablerone", "some-icon-name.svg"])
     end
 
