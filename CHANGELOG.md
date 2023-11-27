@@ -2,6 +2,10 @@
 
 ## Unreleased changes
 
+## 0.2.1
+
+- Fix bug where sometimes an icon filename wouldn't get dasherized.
+
 ## 0.2.0
 
 - `Tablerone.icon` and `Tablerone.path` can take strings, and can get `:otp_app` from opts.

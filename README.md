@@ -8,7 +8,7 @@ and loading them from files.
 ```elixir
 def deps do
   [
-    {:tablerone, "~> 0.1.0"}
+    {:tablerone, "~> 0.2"}
   ]
 end
 ```
