@@ -12,6 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        include:
           - pair:
               elixir: 1.13.0
               otp: 23.3
