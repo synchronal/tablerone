@@ -11,7 +11,7 @@ defmodule Tablerone.MixProject do
       description: "Download load tabler icons to and load from the current project",
       dialyzer: dialyzer(),
       docs: docs(),
-      elixir: "~> 1.13",
+      elixir: "~> 1.15",
       elixirc_paths: elixirc_paths(Mix.env()),
       homepage_url: @scm_url,
       package: package(),

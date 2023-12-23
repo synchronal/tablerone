@@ -14,15 +14,6 @@ jobs:
       matrix:
         include:
           - pair:
-              elixir: 1.13.0
-              otp: 23.3
-          - pair:
-              elixir: 1.14.5
-              otp: 25.0
-          - pair:
-              elixir: 1.14.5
-              otp: 26.0
-          - pair:
               elixir: 1.15.7
               otp: 25.0
           - pair:
@@ -68,15 +59,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - pair:
-              elixir: 1.13.0
-              otp: 23.3
-          - pair:
-              elixir: 1.14.5
-              otp: 25.0
-          - pair:
-              elixir: 1.14.5
-              otp: 26.0
           - pair:
               elixir: 1.15.7
               otp: 25.0
@@ -124,15 +106,6 @@ jobs:
       matrix:
         include:
           - pair:
-              elixir: 1.13.0
-              otp: 23.3
-          - pair:
-              elixir: 1.14.5
-              otp: 25.0
-          - pair:
-              elixir: 1.14.5
-              otp: 26.0
-          - pair:
               elixir: 1.15.7
               otp: 25.0
           - pair:
@@ -176,15 +149,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - pair:
-              elixir: 1.13.0
-              otp: 23.3
-          - pair:
-              elixir: 1.14.5
-              otp: 25.0
-          - pair:
-              elixir: 1.14.5
-              otp: 26.0
           - pair:
               elixir: 1.15.7
               otp: 25.0
