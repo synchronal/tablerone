@@ -2,6 +2,11 @@
 
 ## Unreleased changes
 
+## 0.3.0
+
+- Download icons from github.com instead of from tabler.io.
+- Improve error message when an icon can't be downloaded.
+
 ## 0.2.1
 
 - Fix bug where sometimes an icon filename wouldn't get dasherized.

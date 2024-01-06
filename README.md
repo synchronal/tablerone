@@ -8,7 +8,7 @@ application during development, and loading them from files at runtime.
 ```elixir
 def deps do
   [
-    {:tablerone, "~> 0.2"}
+    {:tablerone, "~> 0.3"}
   ]
 end
 ```
