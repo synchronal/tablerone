@@ -29,8 +29,8 @@ defmodule Mix.Tasks.Tablerone.Download do
 
           Mix.shell().info("Downloaded icon: #{icon_name}.svg")
 
-        {:error, error} ->
-          Mix.raise(error_to_string("Could not download tabler icon #{icon_name}", error))
+        {:error, error, url} ->
+          Mix.raise(error_to_string("Could not download tabler icon #{icon_name} from #{url}", error))
       end
     end
   end
@@ -72,19 +72,21 @@ defmodule Mix.Tasks.Tablerone.Download do
     def get(name) do
       headers = [
         {~c"accept", ~c"*/*"},
-        {~c"host", ~c"tabler-icons.io"},
+        {~c"host", ~c"raw.githubusercontent.com"},
         {~c"user-agent", String.to_charlist("erlang-httpc/OTP#{:erlang.system_info(:otp_release)} hex/tablerone")}
       ]
 
-      case :httpc.request(:get, {icon_url(name), headers}, [], body_format: :binary) do
+      url = icon_url(name)
+
+      case :httpc.request(:get, {url, headers}, [], body_format: :binary) do
         {:ok, {{_, 200, _}, _resp_headers, body}} -> {:ok, to_string(body)}
-        {:ok, {{_, 404, _}, _resp_headers, _body}} -> {:error, :not_found}
-        {:ok, {{_, status_code, _}, _resp_headers, _body}} -> {:error, {:http_error, status_code}}
-        {:error, error} -> {:error, error}
+        {:ok, {{_, 404, _}, _resp_headers, _body}} -> {:error, :not_found, url}
+        {:ok, {{_, status_code, _}, _resp_headers, _body}} -> {:error, {:http_error, status_code}, url}
+        {:error, error} -> {:error, error, url}
       end
     end
 
     defp icon_url(name),
-      do: "https://tabler-icons.io/static/tabler-icons/icons/#{name}.svg"
+      do: "https://raw.githubusercontent.com/tabler/tabler-icons/master/icons/#{name}.svg"
   end
 end

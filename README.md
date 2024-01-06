@@ -1,7 +1,7 @@
 # Tablerone
 
-Renders specific tabler icons by downloading to the priv directory of the parent application.
-and loading them from files.
+Renders [Tabler Icons](https://tabler.io/icons) by downloading individual icons to the priv directory of the parent
+application during development, and loading them from files at runtime.
 
 ## Installation
 
