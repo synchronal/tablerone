@@ -15,7 +15,7 @@ end
 
 ## Usage
 
-Configure tablerone with the `:otp_app` of the parent application, so that icons can be
+In `config.exs`, configure tablerone with the `:otp_app` of the parent application, so that icons can be
 loaded from the proper priv directory at run time.
 
 ```elixir
