@@ -2,6 +2,10 @@
 
 ## Unreleased changes
 
+## 0.3.1
+
+- Fix path to tabler icons
+
 ## 0.3.0
 
 - Download icons from github.com instead of from tabler.io.
