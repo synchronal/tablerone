@@ -87,6 +87,6 @@ defmodule Mix.Tasks.Tablerone.Download do
     end
 
     defp icon_url(name),
-      do: "https://raw.githubusercontent.com/tabler/tabler-icons/master/icons/#{name}.svg"
+      do: "https://raw.githubusercontent.com/tabler/tabler-icons/main/icons/outline/#{name}.svg"
   end
 end
