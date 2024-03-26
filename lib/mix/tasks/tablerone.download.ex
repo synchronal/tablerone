@@ -5,8 +5,8 @@ defmodule Mix.Tasks.Tablerone.Download do
   @moduledoc """
   Downloads a tabler icon to the local priv dir.
 
-      mix tablerone.download cactus
-      mix tablerone.download cactus cactus-off
+      mix tablerone.download --type outline cactus
+      mix tablerone.download --type filled cactus cactus-off
   """
 
   @impl Mix.Task
@@ -17,20 +17,25 @@ defmodule Mix.Tasks.Tablerone.Download do
     config = Mix.Project.config()
     app = config[:app]
     start([app], :temporary, :serial)
-    {:ok, tablerone_dir} = ensure_priv_dir!(app)
+    {opts, icon_names, _} = OptionParser.parse(args, strict: [type: :string], aliases: [t: :type])
+    type = Keyword.get(opts, :type)
 
-    {_opts, icon_names, _} = OptionParser.parse(args, switches: [])
+    if type not in ~w[filled outline] || Enum.empty?(icon_names) do
+      usage()
+    else
+      {:ok, tablerone_dir} = ensure_priv_dir!(app, type)
 
-    for icon_name <- icon_names do
-      case __MODULE__.Downloader.get(icon_name) do
-        {:ok, icon_contents} ->
-          Path.join(tablerone_dir, "#{icon_name}.svg")
-          |> File.write!(String.trim(icon_contents))
+      for icon_name <- icon_names do
+        case __MODULE__.Downloader.get(icon_name, type) do
+          {:ok, icon_contents} ->
+            Path.join(tablerone_dir, "#{icon_name}.svg")
+            |> File.write!(trim_icon(icon_contents))
 
-          Mix.shell().info("Downloaded icon: #{icon_name}.svg")
+            Mix.shell().info("Downloaded icon: #{type}/#{icon_name}.svg")
 
-        {:error, error, url} ->
-          Mix.raise(error_to_string("Could not download tabler icon #{icon_name} from #{url}", error))
+          {:error, error, url} ->
+            Mix.raise(error_to_string("Could not download tabler icon #{icon_name} from #{url}", error))
+        end
       end
     end
   end
@@ -43,8 +48,8 @@ defmodule Mix.Tasks.Tablerone.Download do
   defp could_not_start(app, reason),
     do: "Could not start application #{app}: " <> Application.format_error(reason)
 
-  defp ensure_priv_dir!(app) do
-    priv_dir = :code.priv_dir(app) |> Path.join("tablerone")
+  defp ensure_priv_dir!(app, type) do
+    priv_dir = Path.join([:code.priv_dir(app), "tablerone", type])
 
     case File.mkdir_p(priv_dir) do
       :ok -> {:ok, priv_dir}
@@ -66,17 +71,28 @@ defmodule Mix.Tasks.Tablerone.Download do
     :ok
   end
 
+  defp trim_icon(contents) do
+    contents
+    |> String.replace(~r|<!--.*-->|s, "")
+    |> String.trim()
+  end
+
+  defp usage do
+    IO.puts("USAGE: mix tablerone.download --type <filled | outline> <icon1> [icon2 ...]")
+    exit({:shutdown, 1})
+  end
+
   # # #
 
   defmodule Downloader do
-    def get(name) do
+    def get(name, type) do
       headers = [
         {~c"accept", ~c"*/*"},
         {~c"host", ~c"raw.githubusercontent.com"},
         {~c"user-agent", String.to_charlist("erlang-httpc/OTP#{:erlang.system_info(:otp_release)} hex/tablerone")}
       ]
 
-      url = icon_url(name)
+      url = icon_url(name, type)
 
       case :httpc.request(:get, {url, headers}, [], body_format: :binary) do
         {:ok, {{_, 200, _}, _resp_headers, body}} -> {:ok, to_string(body)}
@@ -86,7 +102,7 @@ defmodule Mix.Tasks.Tablerone.Download do
       end
     end
 
-    defp icon_url(name),
-      do: "https://raw.githubusercontent.com/tabler/tabler-icons/main/icons/outline/#{name}.svg"
+    defp icon_url(name, type),
+      do: "https://raw.githubusercontent.com/tabler/tabler-icons/main/icons/#{type}/#{name}.svg"
   end
 end

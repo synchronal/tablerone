@@ -8,7 +8,7 @@ application during development, and loading them from files at runtime.
 ```elixir
 def deps do
   [
-    {:tablerone, "~> 0.3.1"}
+    {:tablerone, "~> 0.4.0"}
   ]
 end
 ```
@@ -28,7 +28,7 @@ Run the mix task to download one or more icons.
 
 
 ```shell
-mix tablerone.download <icon-name> <icon-name-2> ...
+mix tablerone.download --type <filled | outline> <icon-name> <icon-name-2> ...
 ```
 
 An example heex component for rendering the icon.
@@ -36,11 +36,14 @@ An example heex component for rendering the icon.
 
 ```elixir
 attr :name, :atom, required: true
+attr :type, :atom, required: true, values: [:filled, :outline]
 attr :class, :list, default: []
 
 defp icon(assigns) do
   name = assigns[:name]
-  icon_contents = Tablerone.icon(name)
+  type = assigns[:type]
+
+  icon_contents = Tablerone.icon(name, type)
 
   assigns =
     assign_new(assigns, :icon_contents, fn ->

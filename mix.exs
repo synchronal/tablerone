@@ -2,7 +2,7 @@ defmodule Tablerone.MixProject do
   use Mix.Project
 
   @scm_url "https://github.com/synchronal/tablerone"
-  @version "0.3.1"
+  @version "0.4.0"
 
   def project do
     [

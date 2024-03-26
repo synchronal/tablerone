@@ -54,14 +54,14 @@ defmodule Tablerone do
 
   ## Examples
 
-      iex> icon = Tablerone.icon(:cactus_off)
-      iex> match?("<svg " <> _, icon)
+      iex> icon = Tablerone.icon(:cactus_off, :outline)
+      iex> match?("<svg" <> _, icon)
       true
   """
-  @spec icon(atom() | binary(), keyword()) :: binary()
-  def icon(name, opts \\ Application.get_all_env(:tablerone)) do
+  @spec icon(atom() | binary(), atom(), keyword()) :: binary()
+  def icon(name, type, opts \\ Application.get_all_env(:tablerone)) when type in ~w[filled outline]a do
     name = dasherize(name)
-    svg_path = path(name, opts)
+    svg_path = path(name, type, opts)
 
     if File.exists?(svg_path) do
       File.read!(svg_path)
@@ -71,7 +71,7 @@ defmodule Tablerone do
 
       To download this icon to the local application, run the following in a terminal:
 
-          mix tablerone.download #{name}
+          mix tablerone.download --type #{type} #{name}
       """
     end
   end
@@ -82,10 +82,10 @@ defmodule Tablerone do
   The file is saved to a `tablerone` directory in the priv dir of the parent application,
   specified by the `:tablerone, :otp_app` config.
   """
-  @spec path(atom() | binary(), keyword()) :: Path.t()
-  def path(icon_name, opts \\ Application.get_all_env(:tablerone)) do
+  @spec path(atom() | binary(), atom(), keyword()) :: Path.t()
+  def path(icon_name, type, opts \\ Application.get_all_env(:tablerone)) do
     otp_app = Keyword.fetch!(opts, :otp_app)
-    Path.join([:code.priv_dir(otp_app), "tablerone", "#{dasherize(icon_name)}.svg"])
+    Path.join([:code.priv_dir(otp_app), "tablerone", "#{type}", "#{dasherize(icon_name)}.svg"])
   end
 
   @doc false

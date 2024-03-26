@@ -2,6 +2,14 @@
 
 ## Unreleased changes
 
+## 0.4.0
+
+*BREAKING CHANGES*
+- Tabler Icons has separated its filled icons from its outline icons into different directories (`filled/circle`
+  instead of `circle-filled` for example), so Tablerone now stores its icons similarly. Updating to 0.4.0 will
+  require moving and renaming a bunch of icons, or just removing all your icons and re-downloading them with
+  `mix tablerone.download --type <filled | outline> <icon-name> [<icon-name> ...]`
+
 ## 0.3.1
 
 - Fix path to tabler icons
