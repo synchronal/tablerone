@@ -2,6 +2,9 @@
 
 ## Unreleased changes
 
+- Verify support for Elixir 1.17.0.
+- *Breaking*: Drop support for Elixir older than 1.15.0.
+
 ## 0.4.0
 
 *BREAKING CHANGES*
