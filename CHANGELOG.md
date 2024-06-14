@@ -2,6 +2,8 @@
 
 ## Unreleased changes
 
+## 0.5.0
+
 - Verify support for Elixir 1.17.0.
 
 ## 0.4.0
