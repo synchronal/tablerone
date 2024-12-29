@@ -2,6 +2,10 @@
 
 ## Unreleased changes
 
+## 1.0.1
+
+- Update dependencies
+
 ## 1.0.0
 
 - Require Elixir 1.16 or later.
