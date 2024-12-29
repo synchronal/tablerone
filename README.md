@@ -3,12 +3,14 @@
 Renders [Tabler Icons](https://tabler.io/icons) by downloading individual icons to the priv directory of the parent
 application during development, and loading them from files at runtime.
 
+This library is tested against the latest 3 versions of Elixir.
+
 ## Installation
 
 ```elixir
 def deps do
   [
-    {:tablerone, "~> 0.4.0"}
+    {:tablerone, "~> 1.0"}
   ]
 end
 ```

@@ -2,6 +2,10 @@
 
 ## Unreleased changes
 
+## 1.0.0
+
+- Require Elixir 1.16 or later.
+
 ## 0.5.0
 
 - Verify support for Elixir 1.17.0.
@@ -39,4 +43,3 @@ Initial release.
 
 - `Tablerone.icon` function loads file from parent application's priv dir.
 - `mix tablerone.download <icon>` mix task.
-

@@ -2,7 +2,7 @@ defmodule Tablerone.MixProject do
   use Mix.Project
 
   @scm_url "https://github.com/synchronal/tablerone"
-  @version "0.5.0"
+  @version "1.0.0"
 
   def project do
     [
@@ -11,7 +11,7 @@ defmodule Tablerone.MixProject do
       description: "Download load tabler icons to and load from the current project",
       dialyzer: dialyzer(),
       docs: docs(),
-      elixir: "~> 1.15",
+      elixir: "~> 1.16",
       elixirc_paths: elixirc_paths(Mix.env()),
       homepage_url: @scm_url,
       package: package(),
