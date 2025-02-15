@@ -37,8 +37,7 @@ defmodule Tablerone.MixProject do
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.28", only: [:docs, :dev], runtime: false},
-      {:mix_audit, "~> 2.0", only: :dev, runtime: false},
-      {:moar, "~> 2.0"}
+      {:mix_audit, "~> 2.0", only: :dev, runtime: false}
     ]
 
   defp dialyzer,
