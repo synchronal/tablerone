@@ -2,6 +2,10 @@
 
 ## Unreleased changes
 
+## 1.0.2
+
+- Remove unnecessary dependency on `Moar`. Thanks @jgelens!
+
 ## 1.0.1
 
 - Update dependencies
