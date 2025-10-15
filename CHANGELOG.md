@@ -2,6 +2,9 @@
 
 ## Unreleased changes
 
+- Verify support for OTP 28.
+- CI: bump OTP 25 -> 26 in version matrix.
+
 ## 1.0.2
 
 - Remove unnecessary dependency on `Moar`. Thanks @jgelens!
