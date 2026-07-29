@@ -2,7 +2,10 @@
 
 ## Unreleased changes
 
-- Verify support for OTP 28.
+## v1.0.3
+
+- Update deps.
+- Verify support for OTP 29.
 - CI: bump OTP 25 -> 26 in version matrix.
 
 ## 1.0.2
@@ -11,7 +14,7 @@
 
 ## 1.0.1
 
-- Update dependencies
+- Update dependencies.
 
 ## 1.0.0
 
